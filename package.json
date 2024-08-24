@@ -3,10 +3,15 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "next dev --turbo",
-		"build": "next build",
-		"start": "next start",
-		"lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix"
+		"dev": "next dev --turbo -- ",
+		"prebuild": "rm -rf .next",
+		"build": "next build -- ",
+		"prestart": "npm run build",
+		"start": "next start -- ",
+		"lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
+		"preremove-node_modules": "rm -f package-lock.json",
+		"remove-node_modules": "npm install --package-lock-only",
+		"postremove-node_modules": "npm ci"
 	},
 	"dependencies": {
 		"@nextui-org/button": "2.0.37",
