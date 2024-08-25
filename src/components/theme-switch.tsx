@@ -7,7 +7,7 @@ import { useTheme } from "next-themes";
 import { useIsSSR } from "@react-aria/ssr";
 import clsx from "clsx";
 
-import { SunFilledIcon, MoonFilledIcon } from "@/components/icons";
+import { BsMoonFill, BsSunFill } from "react-icons/bs";
 
 export interface ThemeSwitchProps {
   className?: string;
@@ -42,7 +42,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
     <Component
       {...getBaseProps({
         className: clsx(
-          "px-px transition-opacity hover:opacity-80 cursor-pointer",
+          "px-px transition-background bg-transparent hover:bg-primary-50 dark:hover:bg-primary-100 cursor-pointer rounded-lg",
           className,
           classNames?.base,
         ),
@@ -57,24 +57,18 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
           class: clsx(
             [
               "w-auto h-auto",
-              "bg-transparent",
-              "rounded-lg",
               "flex items-center justify-center",
-              "group-data-[selected=true]:bg-transparent",
+              "!bg-transparent",
               "!text-default-500",
-              "pt-px",
-              "px-0",
+              "hover:!text-primary-400",
+              "py-2",
+              "px-3",
               "mx-0",
             ],
             classNames?.wrapper,
           ),
-        })}
-      >
-        {!isSelected || isSSR ? (
-          <SunFilledIcon size={22} />
-        ) : (
-          <MoonFilledIcon size={22} />
-        )}
+        })}>
+        {!isSelected || isSSR ? ( <BsSunFill /> ) : ( <BsMoonFill /> )}
       </div>
     </Component>
   );
