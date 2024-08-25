@@ -1,141 +1,119 @@
+"use client"
+
 import {
   Navbar as NextUINavbar,
   NavbarContent,
-  NavbarMenu,
   NavbarMenuToggle,
   NavbarBrand,
   NavbarItem,
-  NavbarMenuItem,
 } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
-import { Kbd } from "@nextui-org/kbd";
-import { Link } from "@nextui-org/link";
-import { Input } from "@nextui-org/input";
+import { Badge, Image } from "@nextui-org/react";
 import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
+import NextImage from "next/image";
 import clsx from "clsx";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
-import {
-  TwitterIcon,
-  GithubIcon,
-  DiscordIcon,
-  HeartFilledIcon,
-  SearchIcon,
-  Logo,
-} from "@/components/icons";
+import { BsChevronCompactDown } from "react-icons/bs";
+import { TfiHelpAlt, TfiSettings } from "react-icons/tfi";
+import { IoNotificationsOutline } from "react-icons/io5";
+
 
 export const Navbar = () => {
-  const searchInput = (
-    <Input
-      aria-label="Search"
-      classNames={{
-        inputWrapper: "bg-default-100",
-        input: "text-sm",
-      }}
-      endContent={
-        <Kbd className="hidden lg:inline-block" keys={["command"]}>
-          K
-        </Kbd>
-      }
-      labelPlacement="outside"
-      placeholder="Search..."
-      startContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-      }
-      type="search"
-    />
-  );
 
   return (
-    <NextUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand as="li" className="gap-3 max-w-fit">
+    <NextUINavbar shouldHideOnScroll maxWidth="full" className="bg-white drop-shadow dark:bg-gray-900">
+      <NavbarContent className="sm:hidden" justify="start">
+        <NavbarMenuToggle />
+      </NavbarContent>
+      <NavbarContent className="basis-1/5 sm:basis-full">
+        <NavbarBrand as="li" className="gap-5 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Logo />
-            <p className="font-bold text-inherit">ACME</p>
+          <Image
+            as={NextImage}
+            className="dark:hue-rotate-180 dark:invert"
+            src="/aerchain.png"
+            alt="Aerchain Logo"
+            radius="none"
+            width={123}
+            height={18}
+          />
           </NextLink>
         </NavbarBrand>
-        <ul className="hidden lg:flex gap-4 justify-start ml-2">
+        <ul className="hidden lg:flex gap-6 justify-start ml-4">
           {siteConfig.navItems.map((item) => (
-            <NavbarItem key={item.href}>
+            <NavbarItem key={item?.href}>
               <NextLink
                 className={clsx(
-                  linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                  linkStyles({ color: "foreground", underline: "hover" }),
+                  "hover:text-primary data-[active=true]:text-primary data-[active=true]:font-medium",
                 )}
                 color="foreground"
-                href={item.href}
+                href={item?.href}
               >
-                {item.label}
+
+                {item?.imageUrl ? <div className="mr-2">
+                  <Image
+                  as={NextImage}
+                  removeWrapper
+                  className="dark:hue-rotate-180 dark:invert"
+                  src={item?.imageUrl}
+                  alt="Module Icon"
+                  radius="none"
+                  width={16}
+                  height={16} />
+                </div> : ''}
+                {item?.label}
+                {item?.hasChildren ? <BsChevronCompactDown className="ml-2" /> : ''}
               </NextLink>
             </NavbarItem>
           ))}
         </ul>
       </NavbarContent>
 
-      <NavbarContent
-        className="hidden sm:flex basis-1/5 sm:basis-full"
-        justify="end"
-      >
-        <NavbarItem className="hidden sm:flex gap-2">
-          <Link isExternal aria-label="Twitter" href={siteConfig.links.twitter}>
-            <TwitterIcon className="text-default-500" />
-          </Link>
-          <Link isExternal aria-label="Discord" href={siteConfig.links.discord}>
-            <DiscordIcon className="text-default-500" />
-          </Link>
-          <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-            <GithubIcon className="text-default-500" />
-          </Link>
-          <ThemeSwitch />
-        </NavbarItem>
-        <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
-        <NavbarItem className="hidden md:flex">
-          <Button
-            isExternal
-            as={Link}
-            className="text-sm font-normal text-default-600 bg-default-100"
-            href={siteConfig.links.sponsor}
-            startContent={<HeartFilledIcon className="text-danger" />}
-            variant="flat"
+      <NavbarContent className="hidden sm:flex basis-1/5 sm:basis-full" justify="end" >
+        <NavbarItem className="hidden sm:flex gap-3">
+          <Button isIconOnly color="primary" variant="light">
+          <TfiHelpAlt size={25} />
+          </Button>
+          <Badge
+          content={21}
+          color="warning"
+          showOutline={false}
+          shape="circle"
+          size="sm"
+          className="text-white top-2 right-0.5 max-h-5 text-[10px] pointer-events-none"
           >
-            Sponsor
+            <Button isIconOnly color="primary" variant="light">
+              <IoNotificationsOutline size={25} />
+            </Button>
+          </Badge>
+          <Button isIconOnly color="primary" variant="light">
+          <TfiSettings size={25} />
+          </Button>
+          <ThemeSwitch />
+          <Button
+            variant="flat"
+            className="pl-0 bg-slate-100 dark:bg-default border dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-400"
+            startContent={<Image
+              as={NextImage}
+              className="mix-blend-multiply dark:mix-blend-screen dark:hue-rotate-180 dark:invert"
+              src="/gmail.png"
+              alt="Module Icon"
+              width={150}
+              height={100}
+              radius="sm"
+              style={{
+                width: '100%',
+                height: 'auto',
+              }} />}
+              endContent={<BsChevronCompactDown />}
+              >
           </Button>
         </NavbarItem>
       </NavbarContent>
-
-      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-          <GithubIcon className="text-default-500" />
-        </Link>
-        <ThemeSwitch />
-        <NavbarMenuToggle />
-      </NavbarContent>
-
-      <NavbarMenu>
-        {searchInput}
-        <div className="mx-4 mt-2 flex flex-col gap-2">
-          {siteConfig.navMenuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
-              <Link
-                color={
-                  index === 2
-                    ? "primary"
-                    : index === siteConfig.navMenuItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                }
-                href="#"
-                size="lg"
-              >
-                {item.label}
-              </Link>
-            </NavbarMenuItem>
-          ))}
-        </div>
-      </NavbarMenu>
     </NextUINavbar>
   );
 };
