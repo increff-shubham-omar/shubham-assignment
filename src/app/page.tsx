@@ -5,10 +5,9 @@ export default function Home() {
   return (
     <>
     <section className="flex gap-6 py-4">
-      <SummarySection data={data}/>
+      <SummarySection data={data as any}/>
     </section>
     <section className="flex gap-3 py-4">
-      {/* <TableSection /> */}
     </section>
     </>
   );
