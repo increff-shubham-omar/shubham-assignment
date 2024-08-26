@@ -48,9 +48,8 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground", underline: "hover" }),
-                  "hover:text-primary data-[active=true]:text-primary data-[active=true]:font-medium",
+                  "group hover:text-primary data-[active=true]:text-primary data-[active=true]:font-medium",
                 )}
-                color="foreground"
                 href={item?.href}
               >
 
@@ -66,7 +65,7 @@ export const Navbar = () => {
                   height={16} />
                 </div> : ''}
                 {item?.label}
-                {item?.hasChildren ? <BsChevronCompactDown className="ml-2" /> : ''}
+                {item?.hasChildren ? <BsChevronCompactDown className="ml-2 transition-transform group-hover:rotate-180" /> : ''}
               </NextLink>
             </NavbarItem>
           ))}
