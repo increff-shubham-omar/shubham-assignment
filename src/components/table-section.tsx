@@ -19,17 +19,6 @@ const INITIAL_VISIBLE_COLUMNS = [
 
 export const TableSection = ({ data }: { data: TripDataProps[] }) => {
 
-//   const [filterValue, setFilterValue] = useState("");
-//   const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set([]));
-//   const [statusFilter, setStatusFilter] = useState<Selection>("all");
-//   const [rowsPerPage, setRowsPerPage] = useState(5);
-//   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
-//     column: "age",
-//     direction: "ascending",
-//   });
-
-//   const hasSearchFilter = Boolean(filterValue);
-
     const headerColumns = useMemo(() => { return columns; }, [columns]);
 
     const classNames = useMemo(
@@ -38,7 +27,7 @@ export const TableSection = ({ data }: { data: TripDataProps[] }) => {
           table: "min-h-[300px]",
           wrapper: ["max-h-[382px]", "max-w-3xl"],
           tr: ["border-b"],
-          th: ["bg-white", "text-md", "text-default-700", "font-semibold", "border-divider"],
+          th: ["bg-white", "text-md", "text-default-700", "dark:bg-gray-800", "font-semibold", "border-divider"],
           td: [
             // changing the rows border radius
             // first
@@ -53,40 +42,6 @@ export const TableSection = ({ data }: { data: TripDataProps[] }) => {
         }),
         [],
       );
-
-//   const filteredItems = useMemo(() => {
-//     let filteredUsers = [...users];
-
-//     if (hasSearchFilter) {
-//       filteredUsers = filteredUsers.filter((user) =>
-//         user.name.toLowerCase().includes(filterValue.toLowerCase()),
-//       );
-//     }
-//     if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
-//       filteredUsers = filteredUsers.filter((user) =>
-//         Array.from(statusFilter).includes(user.status),
-//       );
-//     }
-
-//     return filteredUsers;
-//   }, [users, filterValue, statusFilter]);
-
-//   const items = useMemo(() => {
-//     const start = (page - 1) * rowsPerPage;
-//     const end = start + rowsPerPage;
-
-//     return filteredItems.slice(start, end);
-//   }, [page, filteredItems, rowsPerPage]);
-
-//   const sortedItems = useMemo(() => {
-//     return [...items].sort((a: User, b: User) => {
-//       const first = a[sortDescriptor.column as keyof User] as number;
-//       const second = b[sortDescriptor.column as keyof User] as number;
-//       const cmp = first < second ? -1 : first > second ? 1 : 0;
-
-//       return sortDescriptor.direction === "descending" ? -cmp : cmp;
-//     });
-//   }, [sortDescriptor, items]);
 
 
 const renderCell = useCallback((trip: TripDataProps, columnKey: React.Key) => {
@@ -140,120 +95,15 @@ const renderCell = useCallback((trip: TripDataProps, columnKey: React.Key) => {
     }
   }, []);
 
-
-// const topContent = useMemo(() => {
-//     return (
-//       <div className="flex flex-col gap-4">
-//         <div className="flex justify-between gap-3 items-end">
-//           <Input
-//             isClearable
-//             classNames={{
-//               base: "w-full sm:max-w-[44%]",
-//               inputWrapper: "border-1",
-//             }}
-//             placeholder="Search by name..."
-//             size="sm"
-//             startContent={<SearchIcon className="text-default-300" />}
-//             value={filterValue}
-//             variant="bordered"
-//             onClear={() => setFilterValue("")}
-//             onValueChange={onSearchChange}
-//           />
-//           <div className="flex gap-3">
-//             <Dropdown>
-//               <DropdownTrigger className="hidden sm:flex">
-//                 <Button
-//                   endContent={<ChevronDownIcon className="text-small" />}
-//                   size="sm"
-//                   variant="flat"
-//                 >
-//                   Status
-//                 </Button>
-//               </DropdownTrigger>
-//               <DropdownMenu
-//                 disallowEmptySelection
-//                 aria-label="Table Columns"
-//                 closeOnSelect={false}
-//                 selectedKeys={statusFilter}
-//                 selectionMode="multiple"
-//                 onSelectionChange={setStatusFilter}
-//               >
-//                 {statusOptions.map((status) => (
-//                   <DropdownItem key={status.uid} className="capitalize">
-//                     {capitalize(status.name)}
-//                   </DropdownItem>
-//                 ))}
-//               </DropdownMenu>
-//             </Dropdown>
-//             <Dropdown>
-//               <DropdownTrigger className="hidden sm:flex">
-//                 <Button
-//                   endContent={<ChevronDownIcon className="text-small" />}
-//                   size="sm"
-//                   variant="flat"
-//                 >
-//                   Columns
-//                 </Button>
-//               </DropdownTrigger>
-//               <DropdownMenu
-//                 disallowEmptySelection
-//                 aria-label="Table Columns"
-//                 closeOnSelect={false}
-//                 selectedKeys={visibleColumns}
-//                 selectionMode="multiple"
-//                 onSelectionChange={setVisibleColumns}
-//               >
-//                 {columns.map((column) => (
-//                   <DropdownItem key={column.key} className="capitalize">
-//                     {capitalize(column.name)}
-//                   </DropdownItem>
-//                 ))}
-//               </DropdownMenu>
-//             </Dropdown>
-//             <Button
-//               className="bg-foreground text-background"
-//               endContent={<PlusIcon />}
-//               size="sm"
-//             >
-//               Add New
-//             </Button>
-//           </div>
-//         </div>
-//         <div className="flex justify-end items-center">
-//           <span className="text-default-400 text-small">Total {users.length} users</span>
-//           <label className="flex items-center text-default-400 text-small">
-//             Rows per page:
-//             <select
-//               className="bg-transparent outline-none text-default-400 text-small"
-//             //   onChange={onRowsPerPageChange}
-//             >
-//               <option value="5">5</option>
-//               <option value="10">10</option>
-//               <option value="15">15</option>
-//             </select>
-//           </label>
-//         </div>
-//       </div>
-//     );
-//   }, [
-//     filterValue,
-//     statusFilter,
-//     visibleColumns,
-//     onSearchChange,
-//     onRowsPerPageChange,
-//     dataMap?.data?.length,
-//     hasSearchFilter,
-//   ]);
-
 const topContent = useMemo(() => {
     return (
-      <div className="px-3 mb-2 basis-full flex gap-6 items-center">
+      <div className="px-5 mb-2 basis-full flex gap-6 items-center">
         <h6 className="text-lg font-semibold">Trip List</h6>
         <Button
           variant="faded"
           radius="sm"
           size="lg"
-          className="min-w-44 bg-slate-100 border ml-auto dark:border-gray-600 hover:border-gray-600 dark:hover:border-gray-400"
+          className="min-w-44 bg-slate-100 border ml-auto dark:dark:bg-gray-600 dark:border-gray-500 hover:border-gray-600 dark:hover:border-gray-400"
           >
             Update Status
         </Button>
@@ -270,7 +120,7 @@ const topContent = useMemo(() => {
   }, [data?.length]);
 
   return (
-    <Card className="basis-full border-none shadow-xl px-0 py-2 shadow-gray-200 dark:shadow-gray-800/70 dark:bg-gray-700">
+    <Card className="basis-full border-none shadow-xl px-0 py-2 shadow-gray-200 dark:shadow-gray-800/70 dark:bg-gray-800">
       <CardBody className="px-0">
         <Table
         isHeaderSticky
