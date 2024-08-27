@@ -11,8 +11,8 @@ export const SummarySection = ({ dataMap }: {dataMap: TripDataMap}) => {
   return (
     <>
       <TotalTrips data={dataMap?.data} />
-      <DeliveredTrips data={dataMap} />
-      <DelayedTrips data={dataMap} />
+      <DeliveredTrips dataMap={dataMap} />
+      <DelayedTrips dataMap={dataMap} />
     </>
   );
 };
